@@ -1,0 +1,7 @@
+/assembler
+/global.o
+/main.o
+/pre_processor.o
+/stage_1.o
+/text_engine.o
+/utils.o
