@@ -18,9 +18,9 @@ typedef struct Macro {
 void pre_processor(FILE *, char *);
 void read_line_pp(char *, int);
 void add_line(char *, char *);
-void is_macro(char *, char *);
+void macro_handler(char *, char *);
 void add_macro(macro_ptr *, char *);
-bool macro_validation(char *mac_name);
+status macro_validation(char *mac_name);
 macro_ptr check_macro(macro_ptr, char *);
 bool is_macro_exist(macro_ptr, char *);
 void freelist(macro_ptr *);

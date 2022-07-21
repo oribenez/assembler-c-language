@@ -1,5 +1,5 @@
 #include "text_engine.h"
-#include "global.h"
+#include <stdio.h>
 
 /* skip spaces of a string to the next non-blank character */
 char *skip_spaces(char *ch) {
@@ -23,26 +23,21 @@ bool is_ignore_line(char *line) {
  * @return TRUE, if the give word is reserved. Otherwise, false.
  */
 bool is_reserved_word(char *word) {
-    char **ptr;
     int i;
     char ch;
-    
+
     /* check if word is equal to a word from commands list */
-    ptr = (char **)commands;
-    while (strcmp(*ptr, "NULL")) {
-        if (!strcmp(*ptr, word)) { /* equal = found a match */
+    for (i = 0; i < NUM_COMMANDS; i++) {
+        if (!strcmp(commands[i], word)) { /* equal = found a match */
             return TRUE;
         }
-        ptr++;
     }
 
     /* check if word is equal to a letter from directives list */
-    ptr = (char **)directives;
-    while (strcmp(*ptr, "NULL")) {
-        if (!strcmp(*ptr, word)) { /* equal = found a match */
+    for (i = 0; i < NUM_DIRECTIVES; i++) {
+        if (!strcmp(directives[i], word)) { /* equal = found a match */
             return TRUE;
         }
-        ptr++;
     }
 
     /* check if word is equal to a letter from base32 list */
@@ -50,12 +45,13 @@ bool is_reserved_word(char *word) {
         ch = *word;
         for (i = 0; i < BASE_NUMBER; i++) {
             if (ch == base32[i])
-            return TRUE;
+                return TRUE;
         }
     }
 
     /* check if word is equal to register name */
-    if(is_register(word)) return TRUE;
+    if (is_register(word))
+        return TRUE;
 
     return FALSE;
 }
@@ -93,21 +89,15 @@ void copy_word(char *word, char *line) {
 char *next_word(char *str) {
     if (str == NULL)
         return NULL;
-    while (!isspace(*str) && !end_of_line(str))
+    while (!isspace(*str) && !is_end_of_line(str))
         str++;              /* Skip rest of characters in the current token (until a space) */
     str = skip_spaces(str); /* Skip spaces */
-    if (end_of_line(str))
+    if (is_end_of_line(str))
         return NULL;
     return str;
 }
 
-/**
- * @brief prints an error message to the user according to a given table of erros (erros.json)
- *
- * @param error_code which error to show message on
- * @param current_line which line had an error
- */
-int end_of_line(char *line) {
+bool is_end_of_line(char *line) {
     return line == NULL || *line == '\0' || *line == '\n';
 }
 
@@ -117,15 +107,20 @@ bool is_label(char *word) {
     int word_len = strlen(word);
     /* validations */
     /* check lable max length */
-    if(word_len-1 <= LABEL_MAX_LEN) set_error("LABEL_MAX_LEN"); /* minus 1 not inc. colon ':' */
+    if (word_len - 1 > LABEL_MAX_LEN)
+        set_error("LABEL_MAX_LENGTH"); /* minus 1 not inc. colon ':' */
 
     /* check word is including only characters of type letter */
-    for (i = 0; i < word_len; i++) {
-        if(!isalpha(word[i])) {
-            set_error("LABEL_ONLY_ALPHA");
+    if (!isalpha(word[0])) {
+        set_error("LABEL_FIRST_CHAR_IS_LETTER");
+    }
+    for (i = 1; i < word_len - 1; i++) {
+        if (!isalnum(word[i])) {
+            set_error("LABEL_ONLY_ALPHANUMERIC");
+            break;
         }
     }
-    
+
     if (word[word_len - 1] == ':')
         return TRUE;
     else

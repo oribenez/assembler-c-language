@@ -11,8 +11,6 @@
 #define MAX_REGISTER 7    /* r7 is the last register */
 #define NOT_FOUND -1
 
-#define NO_ERROR "NO_ERROR"
-#define UNDEFINED "UNDEFINED"
 #define LABEL_MAX_LEN 30
 
 #define NUM_DIRECTIVES 5
@@ -24,6 +22,19 @@ typedef enum {
     FALSE,
     TRUE
 } bool;
+
+/** ERROR */
+typedef enum {
+    ERROR=0,
+    NO_ERROR=1,
+
+    FAILED=0,
+    SUCCESS=1,
+
+    INVALID=0,
+    VALID=1
+} status;
+
 
 /* Directives types */
 enum directives {DATA, STRING, STRUCT, ENTRY, EXTERN, UNKNOWN_TYPE}; 
@@ -92,7 +103,8 @@ extern const char *commands[];
 extern const char *directives[];
 extern const err errors[];
 extern label_ptr symbols_tbl;
-char* curr_error_key;
+extern bool entry_exists, extern_exists;
+extern char* curr_error_key;
 
 
 /* Prototypes */

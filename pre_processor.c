@@ -46,13 +46,13 @@ void read_line_pp(char *line, int line_num) {
 
     line = skip_spaces(line);
     copy_word(word, line);
+
     /* if first word is label, check the next one */
     if (is_label(word)) {
         /* check next word for macro */
         line = next_word(line);
         copy_word(word, line);
     }
-
     if (reading_macro) { /* if it's macro we will just add the lines to the macro table until endmacro */
         /* finish macro reading */
         if (!strcmp(word, "endmacro")) {
@@ -61,17 +61,16 @@ void read_line_pp(char *line, int line_num) {
         }
         /* add line to macro content */
         strcat(curr_macro->content, all_line);
-
     } else { /* Check for start of macro */
-        is_macro(word, line);
-
+        macro_handler(word, line);
         if (!reading_macro) {
             add_line(all_line, word);
         }
     }
+    
 }
 
-void is_macro(char *word, char *line) {
+void macro_handler(char *word, char *line) {
     if (!strcmp(word, "macro")) { /* enter if macro */
         reading_macro = TRUE;
 
@@ -90,13 +89,13 @@ void is_macro(char *word, char *line) {
  * @return TRUE, if macro is *VALID*
  * @return FALSE, if macro is *INVALID*
  */
-bool macro_validation(char *mac_name) {
-    if(is_macro_exist(curr_macro, mac_name)) return FALSE;
+status macro_validation(char *mac_name) {
+    if(is_macro_exist(curr_macro, mac_name)) return INVALID;
 
     /* check if macro is command name */
-    if(is_reserved_word(mac_name)) return FALSE; 
+    if(is_reserved_word(mac_name)) return INVALID; 
     
-    return TRUE;
+    return VALID;
 }
 
 /* Function used to add a new macro name to the macro table we have */

@@ -1,5 +1,6 @@
-#include "global.h"
-#include "utils.h"
+#include "labelsLinkedList.h"
+#include <stdio.h>
+
 /**
  * @brief function which get a pointer to labels list and free memory allocation.
  *
@@ -7,7 +8,7 @@
  */
 void free_labels(label_ptr *hptr) {
     /* Free the label list by going over each label and free it */
-    labelPtr temp;
+    label_ptr temp;
     while (*hptr) {
         temp = *hptr;
         *hptr = (*hptr)->next;
@@ -22,7 +23,7 @@ void free_labels(label_ptr *hptr) {
  * @param name  the name of the item to delete
  * @return true if label deleted successfuly
  */
-bool delete_label(label_ptr *hptr, char *name) {
+status delete_label(label_ptr *hptr, char *name) {
     label_ptr temp = *hptr;
     label_ptr prev_temp;
     while (temp) {
@@ -34,18 +35,18 @@ bool delete_label(label_ptr *hptr, char *name) {
                 prev_temp->next = temp->next;
                 free(temp);
             }
-            return 1;
+            return SUCCESS;
         }
         prev_temp = temp;
         temp = temp->next;
     }
-    return 0;
+    return FAILED;
 }
 
 /**
  * @brief Get the label node from linked list
  *
- * @param hptr pointer to HEAD of linked list 
+ * @param hptr pointer to HEAD of linked list
  * @param name name of the label to find
  * @return label_ptr pointer to node withe the given label
  */
@@ -56,6 +57,11 @@ label_ptr get_label(label_ptr hptr, char *name) {
         hptr = hptr->next;
     }
     return NULL;
+}
+
+/* This function checks if a given name is a name of a label in the list */
+bool is_existing_label(label_ptr hptr, char *name) {
+    return get_label(hptr, name) != NULL;
 }
 
 /**

@@ -5,12 +5,13 @@
 #include <stdlib.h>
 
 
-static bool process_file(char *filename);
+static status process_file(char *filename);
+
 
 int main(int argc, char const *argv[]) {
 
     int i;
-    bool succeeded = TRUE;
+    status succeeded = NO_ERROR;
     printf("\nLets do it!\n");
 
     /* Check if the user entered mandatory filenames */
@@ -32,8 +33,8 @@ int main(int argc, char const *argv[]) {
  * @param filename The filename, without it's extension
  * @return Whether succeeded
  */
-static bool process_file(char *filename) {
-    long ic = 0, dc = 0;
+static status process_file(char *filename) {
+    unsigned int ic = 0, dc = 0;
     char *input_filename;
     FILE *fd;                           /* Current assembly file descriptor to process */
     long data_img[CODE_ARR_IMG_LENGTH]; /* Contains an image of the machine code */
@@ -47,7 +48,7 @@ static bool process_file(char *filename) {
         /* file couldn't be opened. */
         printf("Error: There is a problem with the file \"%s.as\". skipping to the next one... \n", filename);
         free(input_filename);
-        return FALSE;
+        return FAILED;
     }
 
     /* Pre-processor: expanding macros */
@@ -63,7 +64,7 @@ static bool process_file(char *filename) {
         /* file couldn't be opened. */
         printf("Error: There is a problem with the file \"%s.as\". skipping to the next one... \n", filename);
         free(input_filename);
-        return FALSE;
+        return FAILED;
     }
     
     /* Stage 1: Compiler  */
@@ -72,5 +73,5 @@ static bool process_file(char *filename) {
 
     fclose(fd);
     free(input_filename);
-    return TRUE;
+    return SUCCESS;
 }

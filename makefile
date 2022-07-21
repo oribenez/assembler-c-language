@@ -1,11 +1,11 @@
 CFLAGS = -Wall -ansi -pedantic
 CC = gcc
 GLOBAL_DEPS = global.h
-EXE_DEPS = main.o pre_processor.o utils.o text_engine.o global.o stage_1.o
+EXE_DEPS = main.o pre_processor.o utils.o text_engine.o global.o stage_1.o labelsLinkedList.o
 
 #Runable
 assembler: $(EXE_DEPS) $(GLOBAL_DEPS)
-	$(CC) $(CFLAGS) $(EXE_DEPS) -o assembler
+	$(CC) -g $(CFLAGS) $(EXE_DEPS) -o assembler
 
 
 #Main
@@ -26,6 +26,9 @@ text_engine.o: text_engine.c text_engine.h $(GLOBAL_DEPS)
 
 utils.o: utils.c utils.h $(GLOBAL_DEPS)
 	$(CC) -c $(CFLAGS) utils.c
+
+labelsLinkedList.o: labelsLinkedList.c labelsLinkedList.h
+	$(CC) -c $(CFLAGS) labelsLinkedList.c
 
 
 #Clean
