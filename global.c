@@ -31,14 +31,30 @@ const err errors[] = {
     {"ONLY_LABEL_IN_LINE", "The line of code can't have only label, please complete it."},
     {"INSTRUCTION_NOT_FOUND", "Instruction not found, line must incl. command or directive instruction."},
     {"DIRECTIVE_NO_OPERANDS", "Directive instruction has to have at least one operand."},
-    {"DIRECTIVE_INVALID_NUM_PARAMS", "invalid num operands"},
-    {"LABEL_INSERT_FAILED", "Label insertion has been failed"},
-    {"LABEL_ALREADY_EXISTS", "Label already exists"},
+    {"DIRECTIVE_INVALID_NUM_PARAMS", "invalid num operands."},
+    {"LABEL_INSERT_FAILED", "Label insertion has been failed."},
+    {"LABEL_ALREADY_EXISTS", "Label already exists."},
+    {"DATA_EXPECTED_NUM",".data directive is expecting a number in the operand."},
+    {"DATA_COMMAS_IN_A_ROW","Too many commas."},
+    {"STRING_TOO_MANY_OPERANDS","Too many operands."},
+    {"STRING_OPERAND_NOT_VALID","String operand is invalid."},
+    {"STRUCT_INVALID_STRING","String is invalid in struct"},
+    {"EXTERN_NO_LABEL",""},
+    {"EXTERN_INVALID_LABEL",""},
+    {"EXTERN_TOO_MANY_OPERANDS",""},
+    {"COMMAND_UNEXPECTED_CHAR",""},
+    {"",""},
+    {"",""},
+    
     {"UNDEFINED", "Undefined error."}};
+/*{"",""},*/
 
 char *curr_error_key = "NO_ERROR";
 bool entry_exists, extern_exists;
 label_ptr symbols_tbl;
+unsigned int data_memory[IMAGE_MEM_SIZE];
+unsigned int instr_memory[IMAGE_MEM_SIZE];
+int ic, dc;
 
 /**
  * @return true if error exists in the global err variable, otherwise false.

@@ -33,4 +33,4 @@ labelsLinkedList.o: labelsLinkedList.c labelsLinkedList.h
 
 #Clean
 clean:
-	rm -rf *.o
+	rm -rf *.o assembler

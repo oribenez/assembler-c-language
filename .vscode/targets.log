@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Thu Jul 21 12:46:24 2022
+
+# Make data base, printed on Thu Jul 21 14:35:40 2022
 
 # Variables
 
@@ -40,11 +43,11 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/sy/f0xp9bkj2wnbbmkrzdz30rkm0000gn/T/vscode-ipc-544b2d11-8c05-4c6b-8a94-96b0371a0227.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/sy/f0xp9bkj2wnbbmkrzdz30rkm0000gn/T/vscode-ipc-a0fe343d-0984-4a5e-948e-6986f291e267.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Users/oribenez/.yarn/bin:/Users/oribenez/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/Apple/usr/bin
+PATH = /Users/oribenez/.yarn/bin:/Users/oribenez/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/Apple/usr/bin:/Applications/Postgres.app/Contents/Versions/latest/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -144,7 +147,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 15442
+VSCODE_PID = 81616
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/99=1%
 
@@ -154,9 +157,9 @@ VSCODE_PID = 15442
 
 # Directories
 
-# . (device 16777220, inode 4408616800): 29 files, no impossibilities.
+# . (device 16777220, inode 4408616800): 21 files, no impossibilities.
 
-# 29 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -250,7 +253,7 @@ utils.h:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-21 12:21:55
+#  Last modified 2022-07-21 14:27:03
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -303,16 +306,13 @@ clean:
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `makefile', line 36):
-	rm -rf *.o
+	rm -rf *.o assembler
 	
 
 pre_processor.o: pre_processor.c pre_processor.h global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
-make: *** No rule to make target `all'.  Stop.
-
 #  commands to execute (from `makefile', line 19):
 	$(CC) -c $(CFLAGS) pre_processor.c
 	
@@ -321,6 +321,7 @@ global.o: global.c global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 #  commands to execute (from `makefile', line 16):
 	$(CC) -c $(CFLAGS) global.c
 	
@@ -360,6 +361,6 @@ text_engine.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jul 21 12:46:24 2022
+# Finished Make data base on Thu Jul 21 14:35:40 2022
 
  

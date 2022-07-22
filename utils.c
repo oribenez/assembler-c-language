@@ -32,4 +32,26 @@ void *malloc_with_check(long size) {
     return ptr;
 }
 
+/* This function encodes a given number to data */
+void write_num_to_data_memory(int number) {
+    data_memory[dc++] = (unsigned int)number;
+}
 
+/* This function encodes a given string to data */
+void write_string_to_data_memory(char *str) {
+    while (!is_end_of_line(str)) {
+        data_memory[dc++] = (unsigned int)*str; /* Inserting a character to data array */
+        str++;
+    }
+    data_memory[dc++] = '\0'; /* Insert a null character to data */
+}
+
+/* This function inserts a given word to instructions memory */
+void write_to_instructions_memory(unsigned int word) {
+    instr_memory[ic++] = word;
+}
+
+/* This function inserts given A/R/E 2 bits into given info bit-sequence (the info is being shifted left) */
+unsigned int inject_ARE(unsigned int info, int are) {
+    return (info << BITS_IN_ARE) | are; /* OR operand allows insertion of the 2 bits because 1 + 0 = 1 */
+}

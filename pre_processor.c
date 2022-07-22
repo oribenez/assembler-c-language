@@ -25,7 +25,7 @@ void pre_processor(FILE *curr_file, char *filename) {
     curr_macro = NULL;
 
     /* Read lines until end of file */
-    printf("#Expanding macros(if exists).\n");
+    printf("Expanding macros(if exists).\n");
     while (fgets(temp_line, MAX_LINE_LENGTH, curr_file) != NULL) {
         read_line_pp(temp_line, line_count);
         line_count++; /* increment line counter */
@@ -48,7 +48,7 @@ void read_line_pp(char *line, int line_num) {
     copy_word(word, line);
 
     /* if first word is label, check the next one */
-    if (is_label(word)) {
+    if (is_label(word,TRUE)) {
         /* check next word for macro */
         line = next_word(line);
         copy_word(word, line);

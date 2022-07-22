@@ -34,11 +34,8 @@ int main(int argc, char const *argv[]) {
  * @return Whether succeeded
  */
 static status process_file(char *filename) {
-    unsigned int ic = 0, dc = 0;
     char *input_filename;
     FILE *fd;                           /* Current assembly file descriptor to process */
-    long data_img[CODE_ARR_IMG_LENGTH]; /* Contains an image of the machine code */
-    machine_word *code_img[CODE_ARR_IMG_LENGTH];
 
     /* add filename extension, ".as" */
     input_filename = strallocat(filename, ".as");
@@ -68,7 +65,7 @@ static status process_file(char *filename) {
     }
     
     /* Stage 1: Compiler  */
-    stage_1(fd, filename, code_img, data_img, &ic, &dc);
+    stage_1(fd, filename);
     
 
     fclose(fd);
