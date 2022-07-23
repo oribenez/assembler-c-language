@@ -1,2 +1,7 @@
 /assembler
 /*.o
+/*.am
+/*.ob
+/*.ext
+/*.ent
+
