@@ -1,5 +1,38 @@
-#include "labelsLinkedList.h"
+#include "labels_linked_list.h"
 #include <stdio.h>
+
+/* This function offsets the addresses of a certain group of labels (data/instruction labels)
+ * by a given delta (num).
+ */
+void proceed_addr(label_ptr label, int num, bool is_data) {
+    while (label) {
+        /* We don't offset external labels (their address is 0). */
+        /* is_data and inActionStatement must have different values in order to meet the same criteria
+         * and the XOR operator gives us that */
+        if (!(label->external) && (is_data ^ (label->inActionStatement))) {
+            label->address += num;
+        }
+        label = label->next;
+    }
+}
+
+/* This function searches a label in the list and changes his entry field to TRUE and returns TRUE
+else if the label doesn't exist return FALSE. */
+int set_label_to_entry(label_ptr h, char *name) {
+    label_ptr label = get_label(h, name);
+    if (label != NULL) {
+        if (label->external) {
+            set_error("ENTRY_CANT_BE_EXTERN");
+            return FALSE;
+        }
+        label->entry = TRUE;
+        entry_exists = TRUE; /* Global variable that holds that there was at least one entry in the program */
+        return TRUE;
+    } else
+        set_error("LABEL_DOES_NOT_EXIST");
+
+    return FALSE;
+}
 
 /**
  * @brief function which get a pointer to labels list and free memory allocation.
@@ -51,12 +84,21 @@ status delete_label(label_ptr *hptr, char *name) {
  * @return label_ptr pointer to node withe the given label
  */
 label_ptr get_label(label_ptr hptr, char *name) {
+    
     while (hptr) {
         if (!strcmp(hptr->name, name)) /* we found a label with the name given */
             return hptr;
         hptr = hptr->next;
     }
     return NULL;
+}
+
+/* This function returns the address of a given label, if the label doesn't exist return FALSE (0).*/
+unsigned int get_label_addr(label_ptr h, char *name) {
+    label_ptr label = get_label(h, name);
+    if (label != NULL)
+        return label->address;
+    return FALSE;
 }
 
 /* This function checks if a given name is a name of a label in the list */
@@ -115,4 +157,26 @@ label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool e
 
     va_end(p);
     return temp;
+}
+
+/* This function check if a label is in the array and an external label is so return 1 else return 0 */
+bool is_label_external(label_ptr hptr, char *name) {
+    
+    label_ptr label = get_label(hptr, name);
+    if (label != NULL)
+        return label->external;
+    return FALSE;
+}
+
+/* This function prints the list */
+void print_labels(label_ptr h) {
+    while (h) {
+        printf("\nname: %s, address: %d, external: %d", h->name, h->address, h->external);
+        if (h->external == 0)
+            printf(", is in action statement: %d -> ", h->inActionStatement);
+        else
+            printf(" -> ");
+        h = h->next;
+    }
+    printf("*");
 }

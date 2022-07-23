@@ -5,11 +5,14 @@
 #define IC_INIT_ADDR 100
 #define IMAGE_MEM_SIZE 2560
 #define CODE_ARR_IMG_LENGTH 2560
+
+#define EXT_MAX_LEN 6
 #define MAX_LINE_LENGTH 82 /* Maximum length of a single source line  */
 #define REGISTER_LENGTH 2  /* a register's name contains 2 characters */
 #define MIN_REGISTER 0     /* r0 is the first register */
 #define MAX_REGISTER 7     /* r7 is the last register */
 #define NOT_FOUND -1
+
 
 #define LABEL_MAX_LEN 30
 #define OPERAND_MAX_LEN 20
@@ -75,11 +78,22 @@ typedef enum addressing_types {
     ADDR_IMMEDIATE,
     ADDR_DIRECT,
     ADDR_STRUCT,
-    ADDR_REGISTER
+    ADDR_REGISTER,
+    ADDR_UNKNOWN
 } addressing_type;
 
-enum ARE {ABSOLUTE, EXTERNAL, RELOCATABLE};
+enum ARE { ABSOLUTE,
+           EXTERNAL,
+           RELOCATABLE };
 
+/* Defining a circular double-linked list to store each time the program uses an extern label, and a pointer to that list */
+typedef struct ext *ext_ptr;
+typedef struct ext {
+    char name[LABEL_MAX_LEN]; /* the name of the extern label */
+    unsigned int address;     /* the address in memory where the external address should be replaced */
+    ext_ptr next;              /* a pointer to the next extern in the list */
+    ext_ptr prev;              /* a pointer to the previous extern in the list */
+} ext;
 
 /* linked list of labels */
 typedef struct strLabels *label_ptr;
@@ -101,8 +115,10 @@ extern const char base32[];
 extern const char *commands[];
 extern const char *directives[];
 extern const err errors[];
+extern bool error_occured_flag;
 extern label_ptr symbols_tbl;
 extern bool entry_exists, extern_exists;
+extern ext_ptr ext_list;
 extern char *curr_error_key;
 extern unsigned int data_memory[];
 extern unsigned int instr_memory[];

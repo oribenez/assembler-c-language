@@ -1,12 +1,16 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory `/Users/oribenez/Documents/OpenUni/2022b/C Programming/mmn/mmn_14/assembler-c-language'
 gcc -c -Wall -ansi -pedantic main.c
 gcc -c -Wall -ansi -pedantic pre_processor.c
 gcc -c -Wall -ansi -pedantic utils.c
 gcc -c -Wall -ansi -pedantic text_engine.c
+ 
 gcc -c -Wall -ansi -pedantic global.c
 gcc -c -Wall -ansi -pedantic stage_1.c
-gcc -c -Wall -ansi -pedantic labelsLinkedList.c
-gcc -g -Wall -ansi -pedantic main.o pre_processor.o utils.o text_engine.o global.o stage_1.o labelsLinkedList.o -o assembler
+gcc -c -Wall -ansi -pedantic stage_2.c
+ 
+gcc -c -Wall -ansi -pedantic labels_linked_list.c
+gcc -c -Wall -ansi -pedantic external_linked_list.c
+gcc -g -Wall -ansi -pedantic main.o pre_processor.o utils.o text_engine.o global.o stage_1.o stage_2.o labels_linked_list.o external_linked_list.o -lm -o assembler
 make: Leaving directory `/Users/oribenez/Documents/OpenUni/2022b/C Programming/mmn/mmn_14/assembler-c-language'
  

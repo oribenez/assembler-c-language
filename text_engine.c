@@ -106,41 +106,45 @@ bool is_end_of_line(char *line) {
 bool is_label(char *word, bool is_w_colon) {
     int i;
     int word_len = strlen(word);
-    int colon_bounce = is_w_colon ? 1 : 0;
-    char* word_wo_colon;
-    int word_length_wo_colon;
 
-    /* validations */
-    /* check lable max length */
-    if (word_len - colon_bounce > LABEL_MAX_LEN)
-        if(is_w_colon) set_error("LABEL_MAX_LENGTH"); /* minus 1 not inc. colon ':' */
+    if(word == NULL){
+        if(is_w_colon){
+            if(word_len < 2) return FALSE;
+        } else{
+            if(word_len < 1) return FALSE;
+        }
+    }
 
-    /* check word is including only characters of type letter */
+    if(is_w_colon && word[word_len - 1] != ':')
+        return FALSE;
+
+    if (word_len > LABEL_MAX_LEN) {
+        if(is_w_colon) set_error("LABEL_MAX_LENGTH");
+        return FALSE;
+    }
+    
+    /* first char must be letter */
     if (!isalpha(word[0])) {
         if(is_w_colon) set_error("LABEL_FIRST_CHAR_IS_LETTER");
+        return FALSE;
     }
-    for (i = 1; i < word_len - colon_bounce; i++) {
+
+    /* trim colon at end of the word */
+    if(is_w_colon){
+        word[word_len-1] = '\0';
+        word_len--;
+    }
+
+    for (i = 1; i < word_len; i++) {
         if (!isalnum(word[i])) {
             if(is_w_colon) set_error("LABEL_ONLY_ALPHANUMERIC");
             break;
         }
     }
-    
-    /* check if label word name is reserved (register or command name) */
-    word_length_wo_colon = is_w_colon ? strlen(word) : strlen(word)-1;
-    word_wo_colon = (char*)malloc_with_check(word_length_wo_colon);
-    strcpy(word_wo_colon, word);
-    if(is_reserved_word(word_wo_colon)) return FALSE;
 
+    if(is_reserved_word(word)) return FALSE;
 
-    free(word_wo_colon);
-
-    if (is_w_colon && word[word_len - 1] == ':')
-        return TRUE;
-    else if (!is_w_colon && word[word_len - 1] != ':')
-        return TRUE;
-    else
-        return FALSE;
+    return TRUE;
 }
 
 char *next_list_token(char *dest, char *line) {

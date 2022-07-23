@@ -5,17 +5,27 @@ void stage_1(FILE *curr_file, char *filename) {
     char temp_line[MAX_LINE_LENGTH]; /* temporary string for storing line, read from file */
     int line_count = 1;
     ic = dc = 0;
+    error_occured_flag = FALSE;
 
-    printf("#Starting stage 1.\n");
-    printf("Compiling...\n");
+    printf("\n __________________________\n");
+    printf("|         STAGE 1#         |\n");
+    printf(" ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n");
+
+    printf("* Compiling...\n");
     /* Read lines until end of file */
     while (fgets(temp_line, MAX_LINE_LENGTH, curr_file) != NULL) {
         set_error("NO_ERROR");
         read_line_stage_1(temp_line, line_count);
+
         line_count++; /* increment line counter */
     }
 
-    printf("#Finished stage 1.\n");
+    /* When the first pass ends and the symbols table is complete and IC is evaluated,
+       we can calculate real final addresses */
+    proceed_addr(symbols_tbl, IC_INIT_ADDR, FALSE); /* Instruction symbols will have addresses that start from 100 (MEMORY_START) */
+    proceed_addr(symbols_tbl, ic + IC_INIT_ADDR, TRUE); /* Data symbols will have addresses that start fron NENORY_START + IC */
+
+    printf("* Finished stage 1.\n");
 }
 
 status read_line_stage_1(char *line, int line_num) {
@@ -39,6 +49,7 @@ status read_line_stage_1(char *line, int line_num) {
             return ERROR;
         }
 
+        strtok(curr_word, ":"); /* trim colon at end of he row */
         /* Add label to symbols table */
         label_node = insert_label(&symbols_tbl, curr_word, 0, FALSE, FALSE);
         if (print_error(line_num))
@@ -87,37 +98,6 @@ status read_line_stage_1(char *line, int line_num) {
     return NO_ERROR;
 }
 
-/**
- * @brief search index for a given directive name in directive array
- *
- * @param word the directive to check
- * @return int directive index in array. NOT_FOUND if not found (-1)
- */
-int find_directive(char *word) {
-    int i;
-    for (i = 0; i < NUM_DIRECTIVES; i++) {
-        if (!strcmp(directives[i], word))
-            return i;
-    }
-
-    return NOT_FOUND;
-}
-
-/**
- * @brief search index for a given command name in commands array
- *
- * @param word the command to check
- * @return int command index in array. NOT_FOUND if not found (-1)
- */
-int find_command(char *word) {
-    int i;
-    for (i = 0; i < NUM_COMMANDS; i++) {
-        if (!strcmp(commands[i], word))
-            return i;
-    }
-
-    return NOT_FOUND;
-}
 
 status directive_handler(int instruction_index, char *line) {
     /* check if this directive instruction have at least one operand  */
@@ -368,8 +348,8 @@ int get_addr_method(char *operand) {
         return ADDR_REGISTER;
 
     /*----- Direct addressing method check ----- */
-    else if (is_label(operand, FALSE)) /* Checking if it's a label when there shouldn't be a colon (:) at the end */
-        return ADDR_DIRECT;
+    else if (is_label(operand, FALSE) && strchr(operand,'.') == NULL) /* Checking if it's a label when there shouldn't be a colon (:) at the end */
+        {return ADDR_DIRECT;}
 
     /*----- Struct addressing method check -----*/
     else if (is_label(strtok(operand, "."), FALSE)) {                                    /* Splitting by dot character */

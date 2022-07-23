@@ -40,6 +40,8 @@
     "functional": "c",
     "iterator": "c",
     "memory": "c",
-    "utility": "c"
+    "utility": "c",
+    "stdio.h": "c",
+    "external_linked_list.h": "c"
   }
 }

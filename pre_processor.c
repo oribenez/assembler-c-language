@@ -13,29 +13,33 @@ FILE *macro_file;
 
 /* expands macros */
 void pre_processor(FILE *curr_file, char *filename) {
-    char *input_filename;
+    /*char* input_filename;*/
     char temp_line[MAX_LINE_LENGTH]; /* temporary string for storing line, read from file */
     int line_count = 1;
 
-    printf("#Start Pre assembler.\n");
+    printf("\n\n __________________________\n");
+    printf("|       Pre-processor      |\n");
+    printf(" ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n");
 
     reading_macro = FALSE;
-    input_filename = strallocat(filename, ".am");
-    macro_file = fopen(input_filename, "w");
+    macro_file = create_file(filename, FILE_MACRO);
+    /*input_filename = strallocat(filename,".am");
+    macro_file = fopen(input_filename, "w");*/
+
     curr_macro = NULL;
 
     /* Read lines until end of file */
-    printf("Expanding macros(if exists).\n");
+    printf("* Expanding macros(if exists).\n");
     while (fgets(temp_line, MAX_LINE_LENGTH, curr_file) != NULL) {
         read_line_pp(temp_line, line_count);
         line_count++; /* increment line counter */
     }
 
     freelist(&curr_macro);
-    free(input_filename);
     fclose(macro_file);
+    /*free(input_filename);*/
 
-    printf("#Pre assembler finsihed.\n");
+    printf("* Pre assembler finsihed.");
 }
 
 /* parse row */

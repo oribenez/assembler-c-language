@@ -3,7 +3,7 @@
 
 #include "global.h"
 #include "text_engine.h"
-#include "labelsLinkedList.h"
+#include "labels_linked_list.h"
 #include <stdio.h>
 
 /* Declarations */
@@ -12,8 +12,6 @@
 /* Prototypes */
 void stage_1(FILE *curr_file, char *filename);
 status read_line_stage_1(char *line, int line_num);
-int find_directive(char *word);
-int find_command(char *word);
 status directive_handler(int instruction_index, char* line);
 status command_handler(int instruction_index, char* line);
 status data_directive_handler(char *line);

@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Thu Jul 21 14:35:40 2022
+# Make data base, printed on Fri Jul 22 20:01:42 2022
 
 # Variables
 
@@ -59,7 +59,7 @@ SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.DGmKLLYFrF/Listeners
 # automatic
 %F = $(notdir $%)
 # makefile (from `makefile', line 4)
-EXE_DEPS = main.o pre_processor.o utils.o text_engine.o global.o stage_1.o labelsLinkedList.o
+EXE_DEPS = main.o pre_processor.o utils.o text_engine.o global.o stage_1.o stage_2.o labels_linked_list.o external_linked_list.o
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -102,6 +102,7 @@ USER = oribenez
 .DEFAULT_GOAL := assembler
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+ 
 # default
 MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # default
@@ -149,7 +150,7 @@ LANG = C
 # environment
 VSCODE_PID = 81616
 # variable set hash-table stats:
-# Load=67/1024=7%, Rehash=0, Collisions=1/99=1%
+# Load=67/1024=7%, Rehash=0, Collisions=1/100=1%
 
 # Pattern-specific Variable Values
 
@@ -157,15 +158,23 @@ VSCODE_PID = 81616
 
 # Directories
 
-# . (device 16777220, inode 4408616800): 21 files, no impossibilities.
+# . (device 16777220, inode 4408616800): 24 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+
+external_linked_list.o: external_linked_list.c external_linked_list.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 37):
+	$(CC) -c $(CFLAGS) external_linked_list.c
+	
 
 # Not a target:
 text_engine.h:
@@ -185,6 +194,7 @@ pre_processor.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 global.c:
 #  Implicit rule search has not been done.
@@ -206,12 +216,12 @@ utils.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-labelsLinkedList.o: labelsLinkedList.c labelsLinkedList.h
+labels_linked_list.o: labels_linked_list.c labels_linked_list.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 31):
-	$(CC) -c $(CFLAGS) labelsLinkedList.c
+#  commands to execute (from `makefile', line 34):
+	$(CC) -c $(CFLAGS) labels_linked_list.c
 	
 
 # Not a target:
@@ -222,6 +232,12 @@ stage_1.h:
 
 # Not a target:
 main.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+stage_2.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -251,16 +267,34 @@ utils.h:
 #  File has not been updated.
 
 # Not a target:
+stage_2.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-21 14:27:03
+#  Last modified 2022-07-22 20:01:00
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
-labelsLinkedList.c:
+external_linked_list.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+labels_linked_list.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+external_linked_list.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -268,17 +302,18 @@ labelsLinkedList.c:
 text_engine.o: text_engine.c text_engine.h global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
-#  commands to execute (from `makefile', line 25):
+#  commands to execute (from `makefile', line 28):
 	$(CC) -c $(CFLAGS) text_engine.c
 	
 
-assembler: main.o pre_processor.o utils.o text_engine.o global.o stage_1.o labelsLinkedList.o global.h
+assembler: main.o pre_processor.o utils.o text_engine.o global.o stage_1.o stage_2.o labels_linked_list.o external_linked_list.o global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `makefile', line 8):
-	$(CC) -g $(CFLAGS) $(EXE_DEPS) -o assembler
+	$(CC) -g $(CFLAGS) $(EXE_DEPS) -lm -o assembler
 	
 
 # Not a target:
@@ -288,7 +323,7 @@ assembler: main.o pre_processor.o utils.o text_engine.o global.o stage_1.o label
 #  File has not been updated.
 
 # Not a target:
-labelsLinkedList.h:
+labels_linked_list.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -305,7 +340,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 36):
+#  commands to execute (from `makefile', line 42):
 	rm -rf *.o assembler
 	
 
@@ -321,7 +356,6 @@ global.o: global.c global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  commands to execute (from `makefile', line 16):
 	$(CC) -c $(CFLAGS) global.c
 	
@@ -330,7 +364,7 @@ utils.o: utils.c utils.h global.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 28):
+#  commands to execute (from `makefile', line 31):
 	$(CC) -c $(CFLAGS) utils.c
 	
 
@@ -342,14 +376,31 @@ main.o: main.c global.h
 	$(CC) -c $(CFLAGS) main.c
 	
 
+stage_2.o: stage_2.c stage_2.h global.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 25):
+	$(CC) -c $(CFLAGS) stage_2.c
+	
+
 # Not a target:
 text_engine.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
+cleanall:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 45):
+	rm -rf *.o *.am *.ob *.ext *.ent assembler
+	
+
 # files hash-table stats:
-# Load=26/1024=3%, Rehash=0, Collisions=1/64=2%
+# Load=33/1024=3%, Rehash=0, Collisions=1/78=1%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -361,6 +412,6 @@ text_engine.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jul 21 14:35:40 2022
+# Finished Make data base on Fri Jul 22 20:01:42 2022
 
  
