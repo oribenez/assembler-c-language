@@ -185,12 +185,12 @@ void write_output_entry(FILE *fd) {
     while (label) {
         if (label->entry) {
             base32_address = convert_to_base_32(label->address);
-            fprintf(fp, "%s\t%s\n", label->name, base32_address);
+            fprintf(fd, "%s\t%s\n", label->name, base32_address);
             free(base32_address);
         }
         label = label->next;
     }
-    fclose(fp);
+    fclose(fd);
 }
 
 /**
