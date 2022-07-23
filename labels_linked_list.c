@@ -7,9 +7,9 @@
 void proceed_addr(label_ptr label, int num, bool is_data) {
     while (label) {
         /* We don't offset external labels (their address is 0). */
-        /* is_data and inActionStatement must have different values in order to meet the same criteria
+        /* is_data and activeRow must have different values in order to meet the same criteria
          * and the XOR operator gives us that */
-        if (!(label->external) && (is_data ^ (label->inActionStatement))) {
+        if (!(label->external) && (is_data ^ (label->activeRow))) {
             label->address += num;
         }
         label = label->next;
@@ -137,7 +137,7 @@ label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool e
     if (!external) /* An external label can't be in an action statement */
     {
         va_start(p, external);
-        temp->inActionStatement = va_arg(p, bool);
+        temp->activeRow = va_arg(p, bool);
     } else {
         extern_exists = TRUE;
     }
@@ -173,7 +173,7 @@ void print_labels(label_ptr h) {
     while (h) {
         printf("\nname: %s, address: %d, external: %d", h->name, h->address, h->external);
         if (h->external == 0)
-            printf(", is in action statement: %d -> ", h->inActionStatement);
+            printf(", is in action statement: %d -> ", h->activeRow);
         else
             printf(" -> ");
         h = h->next;

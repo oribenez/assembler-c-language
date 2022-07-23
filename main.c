@@ -1,3 +1,15 @@
+/**
+ * @file main.c
+ * @author Ori Ben-Ezra (https://oribenezra.com/)
+ * @brief  main file which controls all app switches 
+ * such as, pre-processor, stage 1, stage 2.
+ * @version 0.1
+ * @date 2022-07-23
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include "pre_processor.h"
 #include "stage_1.h"
 #include "stage_2.h"
@@ -7,6 +19,9 @@
 
 static status process_file(char *filename, int file_count);
 
+/**
+ * @brief calling assembler to interpret the given files in args.
+ */
 int main(int argc, char const *argv[]) {
 
     int i;
@@ -31,7 +46,8 @@ int main(int argc, char const *argv[]) {
 /**
  * Processes a single assembly source file, and returns the result status.
  * @param filename The filename, without it's extension
- * @return Whether succeeded
+ * @param file_count the number of the file in order.
+ * @return Whether succeeded or not.
  */
 static status process_file(char *filename, int file_count) {
     char *input_filename;
@@ -88,5 +104,6 @@ static status process_file(char *filename, int file_count) {
 
     fclose(fd);
     free(input_filename);
+    
     return SUCCESS;
 }

@@ -1,3 +1,8 @@
+/**
+ * @file pre_processor.c
+ * @brief this file includes all the functions which are related to the pre-processor of the assembler.
+ */
+
 #include "pre_processor.h"
 #include "global.h"
 #include "text_engine.h"

@@ -66,7 +66,7 @@ enum commands { MOV,
                 DEC,
                 JMP,
                 BNE,
-                RED,
+                GET,
                 PRN,
                 JSR,
                 RTS,
@@ -101,7 +101,7 @@ typedef struct strLabels {
     char name[LABEL_MAX_LEN]; /* label name */
     unsigned int address;     /* label address */
     bool external;            /* a boolean type variable to store if the label is extern or not */
-    bool inActionStatement;   /* a boolean type varialbe to store if the label is in an action statement or not */
+    bool activeRow;   /* a boolean type varialbe to store if the label is in an action statement or not */
     bool entry;               /* a boolean type varialbe to store if the label is entry or not */
     label_ptr next;           /* a pointer to the next label in the list */
 } Labels;

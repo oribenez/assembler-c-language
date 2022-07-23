@@ -42,6 +42,7 @@
     "memory": "c",
     "utility": "c",
     "stdio.h": "c",
-    "external_linked_list.h": "c"
+    "external_linked_list.h": "c",
+    "pre_processor.h": "c"
   }
 }
