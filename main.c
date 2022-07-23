@@ -63,7 +63,7 @@ static status process_file(char *filename, int file_count) {
 
     /* cleanup before next stage */
     fclose(fd);
-    printf("SAV2");
+
     /* open .am file with macros */
     input_filename = strallocat(filename, ".am");
     fd = fopen(input_filename, "r");
