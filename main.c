@@ -1,13 +1,13 @@
 /**
  * @file main.c
  * @author Ori Ben-Ezra (https://oribenezra.com/)
- * @brief  main file which controls all app switches 
+ * @brief  main file which controls all app switches
  * such as, pre-processor, stage 1, stage 2.
  * @version 0.1
  * @date 2022-07-23
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #include "pre_processor.h"
@@ -100,11 +100,11 @@ static status process_file(char *filename, int file_count) {
         stage_2(fd, filename);
     }
 
-    printf("\n\nClosing file '%s'\n",filename);
+    printf("\n\nClosing file '%s'\n", filename);
     printf("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n");
 
     fclose(fd);
     free(input_filename);
-    
+
     return SUCCESS;
 }

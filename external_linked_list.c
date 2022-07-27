@@ -1,7 +1,19 @@
+/**
+ * @file external_linked_list.c
+ * @brief this file includes all the functions which are managing the linked list of all external addresings.
+ */
+
 #include "external_linked_list.h"
 #include <stdio.h>
 
-/* This function adds a node to the end of the list */
+/**
+ * @brief function which adds a given info to a new node in the given external_list
+ * 
+ * @param hptr the list to insert to a new node
+ * @param name the name of the node to insert
+ * @param reference the addr to insert
+ * @return ext_ptr pointer to the new node
+ */
 ext_ptr ext_insert_item(ext_ptr *hptr, char *name, unsigned int reference) {
     ext_ptr t, temp;
 
@@ -27,9 +39,12 @@ ext_ptr ext_insert_item(ext_ptr *hptr, char *name, unsigned int reference) {
     return temp;
 }
 
-/* This function frees the allocated memory for the list */
+/**
+ * @brief free an allocated memory of a given list
+ * 
+ * @param hptr the head of the list to free
+ */
 void ext_free_list(ext_ptr *hptr) {
-    /* Frees the extern list by going over each extern node and free it*/
     ext_ptr temp;
     unsigned int last_reference, reference;
 
@@ -44,14 +59,4 @@ void ext_free_list(ext_ptr *hptr) {
             free(temp);
         } while (reference != last_reference);
     }
-}
-
-/* This function prints the ext list */
-void print_ext(ext_ptr h) {
-    ext_ptr orig = h;
-    do {
-        printf("\nname: %s, reference: %d - >", h->name, h->address);
-        h = h->next;
-    } while (h->address != orig->address);
-    printf("*\n");
 }

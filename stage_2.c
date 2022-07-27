@@ -97,23 +97,23 @@ status read_line_stage_2(char *line, int line_num) {
  * .ext file will be generated only if there were .extern instructions in the code
  * .ent file will be generated only if there were .entry instructions in the code
  * .ob file will always be generated according to the table that was generated in stage 1, the file will represent the .as code in 32 base letters.
- * 
+ *
  * @param filename file name of the source code
- * @return int 
+ * @return int
  */
 status generate_output_files(char *filename) {
     FILE *file;
 
-    file = create_file(filename, FILE_OBJECT);    /* generate .ob file */
+    file = create_file(filename, FILE_OBJECT); /* generate .ob file */
     write_output_ob(file);
 
     if (entry_exists) {
-        file = create_file(filename, FILE_ENTRY);   /* generate .ent file */
+        file = create_file(filename, FILE_ENTRY); /* generate .ent file */
         write_output_entry(file);
     }
 
     if (extern_exists) {
-        file = create_file(filename, FILE_EXTERN);  /* generate .ext file */
+        file = create_file(filename, FILE_EXTERN); /* generate .ext file */
         write_output_extern(file);
     }
 
@@ -128,8 +128,8 @@ status generate_output_files(char *filename) {
 /**
  * @brief write to .ob file and seperate commands from data.
  * left column is the address
- * right column is the word in memory 
- * 
+ * right column is the word in memory
+ *
  * @param fd the file to write to. which is the .ob file.
  */
 void write_output_ob(FILE *fd) {
@@ -171,10 +171,10 @@ void write_output_ob(FILE *fd) {
 }
 
 /**
- * @brief write to .ent file 
+ * @brief write to .ent file
  * left column is the label name
- * right column is the address of the label in memory. 
- * 
+ * right column is the address of the label in memory.
+ *
  * @param fd the file to write to. which is the .ent file.
  */
 void write_output_entry(FILE *fd) {
@@ -194,13 +194,13 @@ void write_output_entry(FILE *fd) {
 }
 
 /**
- * @brief write to .ext file 
+ * @brief write to .ext file
  * left column is the label name
- * right column is the address of the external label in memory. 
- * 
+ * right column is the address of the external label in memory.
+ *
  * @param fd the file to write to. which is the .ent file.
  */
-void write_output_extern(FILE *fd) { 
+void write_output_extern(FILE *fd) {
     char *base32_address;
     ext_ptr node;
     node = ext_list;
@@ -216,8 +216,8 @@ void write_output_extern(FILE *fd) {
 }
 
 /**
- * @brief function which checks if source and destination operands exist by opcode 
- * 
+ * @brief function which checks if source and destination operands exist by opcode
+ *
  * @param type type of the command
  * @param is_src is source
  * @param is_dest  is destination
@@ -255,18 +255,18 @@ void check_operands_exist(int type, bool *is_src, bool *is_dest) {
 
 /**
  * @brief function which manages the commands in the second stage, finishing the last words addressing.
- * 
+ *
  * @param type type of command
  * @param line string which represents a line.
  * @return NO_ERROR if there were no errors. or ERORR if there were error while this function was running.
  */
 status command_handler_stage_2(int type, char *line) {
     char first_op[MAX_LINE_LENGTH];
-    char second_op[MAX_LINE_LENGTH];  
-    char *src = first_op, *dest = second_op;    
+    char second_op[MAX_LINE_LENGTH];
+    char *src = first_op, *dest = second_op;
 
-    bool is_src = FALSE, is_dest = FALSE;                
-    int src_method = ADDR_UNKNOWN, dest_method = ADDR_UNKNOWN; 
+    bool is_src = FALSE, is_dest = FALSE;
+    int src_method = ADDR_UNKNOWN, dest_method = ADDR_UNKNOWN;
 
     check_operands_exist(type, &is_src, &is_dest);
 
@@ -296,8 +296,8 @@ status command_handler_stage_2(int type, char *line) {
 
 /**
  * @brief function which writes the additive words of the opernds to the instructions memory
- * 
- * @param src source 
+ *
+ * @param src source
  * @param dest destination
  * @param is_src is source exists
  * @param is_dest is destination exists
@@ -313,12 +313,12 @@ status write_additional_words(char *src, char *dest, bool is_src, bool is_dest, 
         if (is_dest)
             encode_additional_word(TRUE, dest_method, dest);
     }
-    return (status) is_error_exists();
+    return (status)is_error_exists();
 }
 
 /**
  * @brief function which gets info and encdoes from it a word
- * 
+ *
  * @param is_dest destination operand
  * @param reg register number
  * @return unsigned int  returns the new generated word
@@ -326,7 +326,7 @@ status write_additional_words(char *src, char *dest, bool is_src, bool is_dest, 
 unsigned int build_register_word(bool is_dest, char *reg) {
 
     /* Getting the register's number */
-    unsigned int word = (unsigned int)atoi(reg + 1); 
+    unsigned int word = (unsigned int)atoi(reg + 1);
 
     /* Inserting it to the required bits (by source or destination operand) */
     if (!is_dest)
@@ -361,7 +361,7 @@ void write_label(char *label) {
 
 /**
  * @brief This function encodes an additional word to instructions memory, given the addressing method
- * 
+ *
  * @param is_dest boolean, is it destination
  * @param method addressing method
  * @param operand the operand

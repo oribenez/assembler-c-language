@@ -11,12 +11,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* global variables */
 bool reading_macro;
 macro_ptr curr_macro;
 macro_ptr macro_pointer;
 FILE *macro_file;
 
-/* expands macros */
+/**
+ * @brief function which manages all the pre-processor actions, expanding macros.
+ *
+ * @param curr_file the current filename to process
+ * @param filename the filename if the given file
+ */
 void pre_processor(FILE *curr_file, char *filename) {
     /*char* input_filename;*/
     char temp_line[MAX_LINE_LENGTH]; /* temporary string for storing line, read from file */
@@ -47,7 +53,12 @@ void pre_processor(FILE *curr_file, char *filename) {
     printf("* Pre assembler finsihed.");
 }
 
-/* parse row */
+/**
+ * @brief function which reads a given line and interpret it
+ *
+ * @param line the line to interpret
+ * @param line_num the number of the given line
+ */
 void read_line_pp(char *line, int line_num) {
 
     char word[MAX_LINE_LENGTH];
@@ -57,7 +68,7 @@ void read_line_pp(char *line, int line_num) {
     copy_word(word, line);
 
     /* if first word is label, check the next one */
-    if (is_label(word,TRUE)) {
+    if (is_label(word, TRUE)) {
         /* check next word for macro */
         line = next_word(line);
         copy_word(word, line);
@@ -76,9 +87,14 @@ void read_line_pp(char *line, int line_num) {
             add_line(all_line, word);
         }
     }
-    
 }
 
+/**
+ * @brief function which gets the current word and it's line, and add it to the macro list
+ *
+ * @param word current word to check
+ * @param line the current line to check
+ */
 void macro_handler(char *word, char *line) {
     if (!strcmp(word, "macro")) { /* enter if macro */
         reading_macro = TRUE;
@@ -99,15 +115,22 @@ void macro_handler(char *word, char *line) {
  * @return FALSE, if macro is *INVALID*
  */
 status macro_validation(char *mac_name) {
-    if(is_macro_exist(curr_macro, mac_name)) return INVALID;
+    if (is_macro_exist(curr_macro, mac_name))
+        return INVALID;
 
     /* check if macro is command name */
-    if(is_reserved_word(mac_name)) return INVALID; 
-    
+    if (is_reserved_word(mac_name))
+        return INVALID;
+
     return VALID;
 }
 
-/* Function used to add a new macro name to the macro table we have */
+/**
+ * @brief function which gets a macro name and adds it to the macro table
+ *
+ * @param macroTable the macro table to insert to it
+ * @param macroName the name of the macro
+ */
 void add_macro(macro_ptr *macroTable, char *macroName) {
     macro_ptr ptr1, ptr2;
     if (macro_validation(macroName)) {
@@ -172,7 +195,11 @@ bool is_macro_exist(macro_ptr macroTable, char *mac_name) {
     return check_macro(macroTable, mac_name) == NULL ? FALSE : TRUE;
 }
 
-/* Free the memory we allocated for the macro list */
+/**
+ * @brief free the memory which was allocated to the macros list
+ *
+ * @param macroTable the macro list to free
+ */
 void freelist(macro_ptr *macroTable) {
 
     macro_ptr p;

@@ -43,6 +43,7 @@
     "utility": "c",
     "stdio.h": "c",
     "external_linked_list.h": "c",
-    "pre_processor.h": "c"
+    "pre_processor.h": "c",
+    "labels_linked_list.h": "c"
   }
 }

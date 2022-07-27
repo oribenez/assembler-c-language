@@ -13,7 +13,6 @@
 #define MAX_REGISTER 7     /* r7 is the last register */
 #define NOT_FOUND -1
 
-
 #define LABEL_MAX_LEN 30
 #define OPERAND_MAX_LEN 20
 
@@ -91,8 +90,8 @@ typedef struct ext *ext_ptr;
 typedef struct ext {
     char name[LABEL_MAX_LEN]; /* the name of the extern label */
     unsigned int address;     /* the address in memory where the external address should be replaced */
-    ext_ptr next;              /* a pointer to the next extern in the list */
-    ext_ptr prev;              /* a pointer to the previous extern in the list */
+    ext_ptr next;             /* a pointer to the next extern in the list */
+    ext_ptr prev;             /* a pointer to the previous extern in the list */
 } ext;
 
 /* linked list of labels */
@@ -101,7 +100,7 @@ typedef struct strLabels {
     char name[LABEL_MAX_LEN]; /* label name */
     unsigned int address;     /* label address */
     bool external;            /* a boolean type variable to store if the label is extern or not */
-    bool activeRow;   /* a boolean type varialbe to store if the label is in an action statement or not */
+    bool activeRow;           /* a boolean type varialbe to store if the label is in an action statement or not */
     bool entry;               /* a boolean type varialbe to store if the label is entry or not */
     label_ptr next;           /* a pointer to the next label in the list */
 } Labels;

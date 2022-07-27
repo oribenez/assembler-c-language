@@ -43,11 +43,10 @@ const err errors[] = {
     {"EXTERN_INVALID_LABEL", " Invalid label"},
     {"EXTERN_TOO_MANY_OPERANDS", "Too many operands"},
     {"COMMAND_UNEXPECTED_CHAR", "invalid token"},
-    {"COMMAND_LABEL_DOES_NOT_EXIST","Label doesn't exist."},
+    {"COMMAND_LABEL_DOES_NOT_EXIST", "Label doesn't exist."},
     {"FAILED_OPEN_FILE", "failed to create and open new file."},
     {"", ""},
     {"UNDEFINED", "Undefined error."}};
-/*{"",""},*/
 
 char *curr_error_key = "NO_ERROR";
 bool entry_exists, extern_exists;
@@ -86,12 +85,24 @@ bool print_error(int line_num) {
     return FALSE;
 }
 
+/**
+ * @brief Sets an error, this error needs to be printed manually with the function print_error
+ *
+ * @param err_key the key name of the error
+ */
 void set_error(char *err_key) {
-    if(strcmp(err_key,"NO_ERROR")) error_occured_flag = TRUE;
+    if (strcmp(err_key, "NO_ERROR"))
+        error_occured_flag = TRUE;
     curr_error_key = (char *)malloc_w_check(strlen(err_key) + 1);
     strcpy(curr_error_key, err_key);
 }
 
+/**
+ * @brief set and print an error
+ *
+ * @param err_key the key name of the error
+ * @param line_num the line number which this error occured
+ */
 void throw_err(char *err_key, int line_num) {
     set_error(err_key);
     print_error(line_num);

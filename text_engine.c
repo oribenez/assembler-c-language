@@ -1,3 +1,9 @@
+/**
+ * @file text_engine.c
+ * @brief this file includes all the functions which are related to the text hanling of the assembler.
+ * each text that needs to be analysed is done using functions from thi file.
+ */
+
 #include "text_engine.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -111,15 +117,16 @@ char *next_word(char *str) {
         str++;
 
     str = skip_spaces(str); /* Skip spaces until next word/ end of line */
-    
+
     /* if the word didn't reached to the end of the line after skipping spaces, means there is no next word and return null */
-    if (is_end_of_line(str)) return NULL;
+    if (is_end_of_line(str))
+        return NULL;
     return str;
 }
 
 /**
  * @brief check if a given pointer to a line is in the end of it, which menas that there are no more word to read in this line.
- * 
+ *
  * @param line pointer to a character in a string
  * @return true if end of line
  */
@@ -130,7 +137,7 @@ bool is_end_of_line(char *line) {
 /**
  * @brief function which checks if a given word is a label
  * @exception there is a need check after calling this funciton if there were errors during the function operation.
- * 
+ *
  * @param word the word to check if it is a label
  * @param is_w_colon indicator which tells if the word includes a colon at the end of it, true if coolon exists, otherwise false.
  * @return true if the given word is a label, otherwise false.
@@ -188,7 +195,7 @@ bool is_label(char *word, bool is_w_colon) {
 /**
  * @brief funciton which copy the next word to a given destination
  * Important note: the words are seperated with one comma  ','
- * 
+ *
  * @param dest destination pointer to copy the word to, make sure that memory is allocated before callling this function.
  * @param line the line to read and find in it the next word
  * @return pointer to the next word in this line
@@ -223,8 +230,8 @@ char *copy_next_li_word(char *dest, char *line) {
 
 /**
  * @brief function which checks if a given sequence is a valid string (wrapped with "")
- * 
- * @param str string to check if it is a valid string 
+ *
+ * @param str string to check if it is a valid string
  * @return true if string, otherwise false.
  */
 bool is_string(char *str) {
@@ -252,7 +259,7 @@ bool is_string(char *str) {
 
 /**
  * @brief function which copy the next word within a given line, but the next word is a String which is wrapped with quotes ""
- * 
+ *
  * @param dest destination pointer to copy, make sure memory allocation is made before calling this funciton
  * @param line the line to read next word
  * @return pointer to the next word
@@ -263,7 +270,7 @@ char *next_token_string(char *dest, char *line) {
 
     if (*dest != '"')
         return line;
-        
+
     while (!is_end_of_line(line) && dest[strlen(dest) - 1] != '"') {
         line = copy_next_li_word(temp, line);
         if (line)
@@ -274,7 +281,7 @@ char *next_token_string(char *dest, char *line) {
 
 /**
  * @brief function which checks if a string is a number which is built all from digits
- * 
+ *
  * @param str the string to check
  * @return true if string is a number, otherwise false.
  */

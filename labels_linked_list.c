@@ -1,8 +1,17 @@
+/**
+ * @file labels_linked_list.c
+ * @brief this file includes all the functions which are managing the linked list of all labels in the source file.
+ */
+
 #include "labels_linked_list.h"
 #include <stdio.h>
 
-/* This function offsets the addresses of a certain group of labels (data/instruction labels)
- * by a given delta (num).
+/**
+ * @brief function which moves the adderess of a group of labels by a given number (moves in memory).
+ *
+ * @param label
+ * @param num
+ * @param is_data
  */
 void proceed_addr(label_ptr label, int num, bool is_data) {
     while (label) {
@@ -18,15 +27,22 @@ void proceed_addr(label_ptr label, int num, bool is_data) {
 
 /* This function searches a label in the list and changes his entry field to TRUE and returns TRUE
 else if the label doesn't exist return FALSE. */
-int set_label_to_entry(label_ptr h, char *name) {
-    label_ptr label = get_label(h, name);
+/**
+ * @brief function which sets the label to entry.
+ *
+ * @param hptr pointer to the lables list
+ * @param name the name of the lable to update
+ * @return true if set successfully, otherwise false.
+ */
+bool set_label_to_entry(label_ptr hptr, char *name) {
+    label_ptr label = get_label(hptr, name);
     if (label != NULL) {
         if (label->external) {
             set_error("ENTRY_CANT_BE_EXTERN");
             return FALSE;
         }
         label->entry = TRUE;
-        entry_exists = TRUE; /* Global variable that holds that there was at least one entry in the program */
+        entry_exists = TRUE;
         return TRUE;
     } else
         set_error("LABEL_DOES_NOT_EXIST");
@@ -84,7 +100,7 @@ status delete_label(label_ptr *hptr, char *name) {
  * @return label_ptr pointer to node withe the given label
  */
 label_ptr get_label(label_ptr hptr, char *name) {
-    
+
     while (hptr) {
         if (!strcmp(hptr->name, name)) /* we found a label with the name given */
             return hptr;
@@ -93,34 +109,47 @@ label_ptr get_label(label_ptr hptr, char *name) {
     return NULL;
 }
 
-/* This function returns the address of a given label, if the label doesn't exist return FALSE (0).*/
-unsigned int get_label_addr(label_ptr h, char *name) {
-    label_ptr label = get_label(h, name);
+/**
+ * @brief Get the label address of a given label
+ *
+ * @param hptr pointer to the head of the list
+ * @param name the name of the label to find
+ * @return unsigned int, The address of the label, or FALSE(0) if doesn't exist
+ */
+unsigned int get_label_addr(label_ptr hptr, char *name) {
+    label_ptr label = get_label(hptr, name);
     if (label != NULL)
         return label->address;
     return FALSE;
 }
 
 /* This function checks if a given name is a name of a label in the list */
+/**
+ * @brief function which checks if a label exists in list
+ *
+ * @param hptr pointer to the head of the list
+ * @param name the name of the label to find
+ * @return TRUE if label found, otherwise FALSE.
+ */
 bool is_existing_label(label_ptr hptr, char *name) {
     return get_label(hptr, name) != NULL;
 }
 
 /**
- * @brief function to add a label to symbols list
+ * @brief function which adds a label to symbols list
  *
- * @param hptr a node of the linked list
- * @param name
- * @param address
- * @param external
+ * @param hptr pointer to the head of the list
+ * @param name the name of the label to find
+ * @param address address of the label
+ * @param external is external type
  * @param ...
- * @return label_ptr
+ * @return label_ptr pointer to the new inserted node with the given data
  */
 label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool external, ...) {
     va_list p;
 
     label_ptr t = *hptr;
-    label_ptr temp; /* Auxiliary variable to store the info of the label and add to the list */
+    label_ptr temp;
 
     if (is_existing_label(*hptr, name)) {
         set_error("LABEL_ALREADY_EXISTS");
@@ -134,8 +163,8 @@ label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool e
     temp->address = address;
     temp->external = external;
 
-    if (!external) /* An external label can't be in an action statement */
-    {
+    /* An external label can't be in an action statement */
+    if (!external) {
         va_start(p, external);
         temp->activeRow = va_arg(p, bool);
     } else {
@@ -159,24 +188,17 @@ label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool e
     return temp;
 }
 
-/* This function check if a label is in the array and an external label is so return 1 else return 0 */
+/**
+ * @brief function which gets a label name and checks if it is an external label.
+ *
+ * @param hptr pointer to the head of the list
+ * @param name the name of the label to find
+ * @return true if label is from type external, otherwise false.
+ */
 bool is_label_external(label_ptr hptr, char *name) {
-    
+
     label_ptr label = get_label(hptr, name);
     if (label != NULL)
         return label->external;
     return FALSE;
-}
-
-/* This function prints the list */
-void print_labels(label_ptr h) {
-    while (h) {
-        printf("\nname: %s, address: %d, external: %d", h->name, h->address, h->external);
-        if (h->external == 0)
-            printf(", is in action statement: %d -> ", h->activeRow);
-        else
-            printf(" -> ");
-        h = h->next;
-    }
-    printf("*");
 }

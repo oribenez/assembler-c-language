@@ -558,7 +558,7 @@ int cmd_calc_num_additive_words(int is_first, int is_second, int first_method, i
 /* This function encodes the first word of the command */
 /**
  * @brief function which generates a the first word of command with given params
- * 
+ *
  * @param type the type of the command
  * @return unsigned int which represents the first word in the instructions memory.
  */

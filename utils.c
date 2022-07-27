@@ -1,3 +1,9 @@
+/**
+ * @file utils.c
+ * @brief file which includes all the helper functions to run all the actions of this app, such as
+ * memory allocation functions, creating files, etc.
+ */
+
 #include "utils.h"
 #include <ctype.h>
 #include <math.h>
@@ -35,7 +41,7 @@ void *malloc_w_check(long size) {
 
 /**
  * @brief function which insert a number to the data_memory
- * 
+ *
  * @param number the number to insert
  */
 void write_num_to_data_memory(int number) {
@@ -46,7 +52,7 @@ void write_num_to_data_memory(int number) {
 /**
  * @brief function which write a string to the data_memory
  * note: each character is a 'word' 10 bits as in the booklet.
- * 
+ *
  * @param str the string to insert to data_memory
  */
 void write_string_to_data_memory(char *str) {
@@ -54,12 +60,12 @@ void write_string_to_data_memory(char *str) {
         data_memory[dc++] = (unsigned int)*str;
         str++;
     }
-    data_memory[dc++] = '\0';/* close string */
+    data_memory[dc++] = '\0'; /* close string */
 }
 
 /**
  * @brief function which inserts a given word to the instructions_memory
- * 
+ *
  * @param word the word to insert to memory
  */
 void write_to_instructions_memory(unsigned int word) {
@@ -68,7 +74,7 @@ void write_to_instructions_memory(unsigned int word) {
 
 /**
  * @brief function which injects a given ARE to a given number called info.
- * 
+ *
  * @param info the number to insert to it a given ARE
  * @param are the ARE to insert
  * @return unsigned int the number with the new ARE
@@ -79,7 +85,7 @@ unsigned int inject_ARE(unsigned int info, int ARE) {
 
 /**
  * @brief function which gets a number which represents a word and convert it to 2 digits in base 32.
- * 
+ *
  * @param num the number to convert
  * @return pointer to a string which represents the new converted base 32 word.
  */
@@ -96,8 +102,8 @@ char *convert_to_base_32(unsigned int num) {
 
 /**
  * @brief function which cuts a word which represents a number, and return the cutted number
- * 
- * @param word word to cut 
+ *
+ * @param word word to cut
  * @param start starting index
  * @param end  end index
  * @return unsigned int which represents a number
@@ -115,7 +121,7 @@ unsigned int extract_bits(unsigned int word, int start, int end) {
 
 /**
  * @brief Create a file object with a given filename and type
- * 
+ *
  * @param filename the file name of the new file to create
  * @param type the type of the file, the end extension filename, such as FILE_MACRO.
  * @return FILE* returns a pointer to the new file
@@ -137,8 +143,8 @@ FILE *create_file(char *filename, int type) {
 }
 
 /**
- * @brief function which concatenating filename with a given type of file 
- * 
+ * @brief function which concatenating filename with a given type of file
+ *
  * @param original filename to concat
  * @param type the type of the file to add it's extension to the filename
  * @return char* pointer to the string which will represent the filename
@@ -146,7 +152,7 @@ FILE *create_file(char *filename, int type) {
 char *generate_file_name(char *original, int type) {
     char *new_name;
     new_name = (char *)malloc_w_check(strlen(original) + EXT_MAX_LEN);
-    strcpy(new_name, original); 
+    strcpy(new_name, original);
 
     /* concat file extension */
     switch (type) {
