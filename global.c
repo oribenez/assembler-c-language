@@ -88,7 +88,7 @@ bool print_error(int line_num) {
 
 void set_error(char *err_key) {
     if(strcmp(err_key,"NO_ERROR")) error_occured_flag = TRUE;
-    curr_error_key = (char *)malloc_with_check(strlen(err_key) + 1);
+    curr_error_key = (char *)malloc_w_check(strlen(err_key) + 1);
     strcpy(curr_error_key, err_key);
 }
 

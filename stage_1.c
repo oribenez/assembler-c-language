@@ -173,11 +173,11 @@ status command_handler(int instruction_index, char *line) {
     int first_operand_addr_method, second_operand_addr_method;
     char first_operand[OPERAND_MAX_LEN], second_operand[OPERAND_MAX_LEN];
 
-    line = next_list_token(first_operand, line);
+    line = copy_next_li_word(first_operand, line);
     if (!is_end_of_line(first_operand)) /* If first operand is not empty */
     {
         is_first = TRUE; /* First operand exists! */
-        line = next_list_token(second_operand, line);
+        line = copy_next_li_word(second_operand, line);
         if (!is_end_of_line(second_operand)) /* If second operand (should hold temporarily a comma) is not empty */
         {
             /* A comma must separate two operands of a command */
@@ -187,7 +187,7 @@ status command_handler(int instruction_index, char *line) {
             }
 
             else {
-                line = next_list_token(second_operand, line);
+                line = copy_next_li_word(second_operand, line);
                 if (is_end_of_line(second_operand)) /* If second operand is not empty */
                 {
                     set_error("COMMAND_UNEXPECTED_CHAR");
@@ -247,7 +247,7 @@ status data_directive_handler(char *line) {
     char token[20];
 
     while (!is_end_of_line(line)) {
-        line = next_list_token(token, line);
+        line = copy_next_li_word(token, line);
 
         /* Not an empty token */
         if (strlen(token) > 0) {
@@ -319,12 +319,12 @@ status string_directive_handler(char *line) {
 status struct_directive_handler(char *line) {
     char token[MAX_LINE_LENGTH];
     /* Getting the first token into token array in the line above */
-    line = next_list_token(token, line);
+    line = copy_next_li_word(token, line);
 
     /* First token must be a number */
     if (!is_end_of_line(token) && is_number(token)) {
         write_num_to_data_memory(atoi(token));
-        line = next_list_token(token, line); /* Get next token */
+        line = copy_next_li_word(token, line); /* Get next token */
 
         /* There must be a comma between .struct operands */
         if (!is_end_of_line(token) && *token == ',') {
@@ -349,7 +349,7 @@ status struct_directive_handler(char *line) {
         set_error("STRUCT_INVALID_NUM");
         return ERROR;
     }
-    if (!is_end_of_line(next_list_token(token, line))) {
+    if (!is_end_of_line(copy_next_li_word(token, line))) {
         set_error("STRUCT_TOO_MANY_OPERANDS");
         return ERROR;
     }

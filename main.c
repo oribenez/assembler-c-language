@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Prototypes */
 static status process_file(char *filename, int file_count);
 
 /**
@@ -59,7 +60,7 @@ static status process_file(char *filename, int file_count) {
     symbols_tbl = NULL;
 
     /* add filename extension, ".as" */
-    input_filename = strallocat(filename, ".as");
+    input_filename = str_alloc_concat(filename, ".as");
 
     /* title */
     printf("\n\n ___\n");
@@ -81,7 +82,7 @@ static status process_file(char *filename, int file_count) {
     fclose(fd);
 
     /* open .am file with macros */
-    input_filename = strallocat(filename, ".am");
+    input_filename = str_alloc_concat(filename, ".am");
     fd = fopen(input_filename, "r");
     if (fd == NULL) {
         /* file couldn't be opened. */

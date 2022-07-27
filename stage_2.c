@@ -278,12 +278,12 @@ status command_handler_stage_2(int type, char *line) {
 
     /* Matching src and dest pointers to the correct operands (first or second or both) */
     if (is_src || is_dest) {
-        line = next_list_token(first_op, line);
+        line = copy_next_li_word(first_op, line);
 
         /* There are 2 operands */
         if (is_src && is_dest) {
-            line = next_list_token(second_op, line);
-            next_list_token(second_op, line);
+            line = copy_next_li_word(second_op, line);
+            copy_next_li_word(second_op, line);
         } else {
             dest = first_op;
             src = NULL;
@@ -313,7 +313,7 @@ status write_additional_words(char *src, char *dest, bool is_src, bool is_dest, 
         if (is_dest)
             encode_additional_word(TRUE, dest_method, dest);
     }
-    return is_error_exists();
+    return (status) is_error_exists();
 }
 
 /**

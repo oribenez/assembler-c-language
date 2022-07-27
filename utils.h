@@ -16,8 +16,8 @@ enum filetypes { FILE_INPUT,
                  FILE_EXTERN };
 
 /* Prototypes */
-char *strallocat(char *s0, char *s1);
-void *malloc_with_check(long size);
+char *str_alloc_concat(char *s0, char *s1);
+void *malloc_w_check(long size);
 void write_num_to_data_memory(int number);
 void write_string_to_data_memory(char *str);
 void write_to_instructions_memory(unsigned int word);

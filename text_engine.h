@@ -15,7 +15,7 @@ void copy_word(char *word, char *line);
 char *next_word(char *);
 bool is_end_of_line(char *);
 bool is_label(char *word, bool is_w_colon);
-char *next_list_token(char *dest, char *line);
+char *copy_next_li_word(char *dest, char *line);
 bool is_number(char *str);
 bool is_string(char *str);
 char *next_token_string(char *dest, char *line);

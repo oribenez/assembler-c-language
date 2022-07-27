@@ -126,7 +126,7 @@ label_ptr insert_label(label_ptr *hptr, char *name, unsigned int address, bool e
         set_error("LABEL_ALREADY_EXISTS");
         return NULL;
     }
-    temp = (label_ptr)malloc_with_check(sizeof(Labels));
+    temp = (label_ptr)malloc_w_check(sizeof(Labels));
 
     /* Storing the info of the label in temp */
     strcpy(temp->name, name);

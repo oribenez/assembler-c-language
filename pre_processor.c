@@ -28,7 +28,7 @@ void pre_processor(FILE *curr_file, char *filename) {
 
     reading_macro = FALSE;
     macro_file = create_file(filename, FILE_MACRO);
-    /*input_filename = strallocat(filename,".am");
+    /*input_filename = str_alloc_concat(filename,".am");
     macro_file = fopen(input_filename, "w");*/
 
     curr_macro = NULL;
@@ -111,7 +111,7 @@ status macro_validation(char *mac_name) {
 void add_macro(macro_ptr *macroTable, char *macroName) {
     macro_ptr ptr1, ptr2;
     if (macro_validation(macroName)) {
-        ptr1 = (macro_ptr)malloc_with_check(sizeof(macro_list));
+        ptr1 = (macro_ptr)malloc_w_check(sizeof(macro_list));
 
         /* Save the new macro as a node in our table */
         strcpy(ptr1->name, macroName);

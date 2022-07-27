@@ -6,7 +6,7 @@ ext_ptr ext_insert_item(ext_ptr *hptr, char *name, unsigned int reference) {
     ext_ptr t, temp;
 
     t = *hptr;
-    temp = (ext_ptr)malloc_with_check(sizeof(ext));
+    temp = (ext_ptr)malloc_w_check(sizeof(ext));
 
     temp->address = reference;
     strcpy(temp->name, name);

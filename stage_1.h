@@ -6,9 +6,6 @@
 #include "labels_linked_list.h"
 #include <stdio.h>
 
-/* Declarations */
-
-
 /* Prototypes */
 void stage_1(FILE *curr_file, char *filename);
 status read_line_stage_1(char *line, int line_num);
