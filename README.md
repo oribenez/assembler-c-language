@@ -1,12 +1,15 @@
-# C Assembler to base32
-The final assignment (#14) of the C course (20465) at The Open University.  
+# C Assembler - base32
+Project which is written in C language. With this project you can compile assembly code to machine code (imagenary base 32).
+
+This project is compiling the eassembly code with three steps:
+1. **Pre-processor** : expanding macros and output to file '.am'.
+2. **Stage 1** : interpret all the code to table of instructions and a table of data.
+3. **Stage 2** : complete missing info in the table of instructions and data. wrapping all the code into output files (.ob, .ext, .ent).
 
 This project is based on the **_two-pass assembler_** model.  
 **Note:** the computer model for this project and the given assembly language are **imaginary**.
 
 ## Getting Started
-
-The project was coded and compiled using Ubuntu, but it may run on all Linux versions.
 
 ### Usage
 
@@ -22,6 +25,7 @@ As for the files x.as, y.as, hello.as we will run:
 >   assembler x y hello
 ```
 The assembler will generate output files with the same filenames and the following extensions:  
+- `.am` - Macros file
 - `.ob` - Object file
 - `.ent` - Entries file
 - `.ext` - Externals file
@@ -44,7 +48,7 @@ The first word is of the following structure:
 
 |  9&emsp;8&emsp;7&emsp;6  |  5&emsp;4  |  3&emsp;2  |  1&emsp;0  |
 | ------------------------ | ---------- | ---------- | ---------- |
-|          Opcode          | Source operand addressing method | Destination operand addressing method | E, R, A
+|          Opcode          | Source operand addressing method | Destination operand addressing method | A, R, E
 
 Encoding of each instruction word is done using an **imaginary** base32 as defined here:
 ```
@@ -99,11 +103,11 @@ The commands allowed in bits 6-9 are:
 |	8	|	dec	|
 |	9	|	jmp	|
 |	10	|	bne	|
-|	11	|	red	|
+|	11	|	get	|
 |	12	|	prn	|
 |	13	|	jsr	|
 |	14	|	rts	|
-|	15	|	stop	|
+|	15	|	hlt	|
 
 ## Directives
 A **_directive_** line of the following structure:
